@@ -75,6 +75,9 @@ document.addEventListener('keydown', e => {
   }
 });
 
+// Additional attempt to disable right-click on the PDF viewer (iframe/embed)
+document.getElementById('pdfViewer').addEventListener('contextmenu', e => e.preventDefault());
+
 let totalQ=0;let answers={};let current=1;let timerSec=3*60*60;let timerInterval=null;let visited={};
 
 function updateQuestionStatus(qNum) {
@@ -197,5 +200,6 @@ function startTimer(){
 </body>
 
 </html>
+
 
 
