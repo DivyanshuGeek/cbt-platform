@@ -183,30 +183,11 @@ function startTimer(){
   document.getElementById('timerFixed').innerText=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
  },1000);
 }
-    // ===== Your CBT Logic Above =====
-
-
-
-   // ===== Protection Code =====
-   document.addEventListener("contextmenu", function(e) {
-       e.preventDefault();
-   });
-
-   document.addEventListener("keydown", function(e) {
-       if (e.key === "F12") {
-           e.preventDefault();
-       }
-       if (e.ctrlKey && e.shiftKey && e.key === "I") {
-           e.preventDefault();
-       }
-       if (e.ctrlKey && e.shiftKey && e.key === "J") {
-           e.preventDefault();
-       }
-       if (e.ctrlKey && e.key === "U") {
-           e.preventDefault();
-       }
-   });
+    
 </script>
+<script src="script.js?v=2"></script>
+
 </body>
 
 </html>
+
