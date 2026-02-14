@@ -75,8 +75,20 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// Additional attempt to disable right-click on the PDF viewer (iframe/embed)
-document.getElementById('pdfViewer').addEventListener('contextmenu', e => e.preventDefault());
+// Additional attempt to disable right-click on the PDF viewer (iframe/embed) and its content
+const pdfViewer = document.getElementById('pdfViewer');
+pdfViewer.addEventListener('contextmenu', e => e.preventDefault());
+pdfViewer.addEventListener('load', () => {
+  try {
+    // Attempt to disable context menu inside the iframe content (for local PDFs)
+    const iframeDoc = pdfViewer.contentDocument || pdfViewer.contentWindow.document;
+    if (iframeDoc) {
+      iframeDoc.addEventListener('contextmenu', e => e.preventDefault());
+    }
+  } catch (e) {
+    // Cross-origin restrictions may prevent this; ignore silently
+  }
+});
 
 let totalQ=0;let answers={};let current=1;let timerSec=3*60*60;let timerInterval=null;let visited={};
 
@@ -200,6 +212,7 @@ function startTimer(){
 </body>
 
 </html>
+
 
 
 
