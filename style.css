@@ -127,9 +127,24 @@ body {
 
 /* Footer */
 footer {
-    padding: 20px;
-    text-align: center;
     background: #020617;
+    padding: 30px 20px;
+    text-align: center;
     margin-top: 60px;
-    color: #94a3b8;
 }
+
+footer p {
+    margin: 8px 0;
+    color: #94a3b8;
+    font-size: 14px;
+}
+
+footer a {
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
