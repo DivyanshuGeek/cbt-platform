@@ -3,216 +3,373 @@
 <head>
 <meta charset="UTF-8">
 <title>CBT Exam Interface</title>
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
 <style>
-*{box-sizing:border-box;font-family:'Roboto', Arial, sans-serif}
-body{margin:0;background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);color:#fff;min-height:100vh}
-header{padding:15px;background: rgba(0,0,0,0.8);text-align:center;font-size:24px;font-weight:bold;border-bottom: 3px solid #0f0;box-shadow: 0 4px 8px rgba(0,0,0,0.3)}
-#timer{float:right;font-size:20px;color:#0f0;background: rgba(255,255,255,0.1);padding: 5px 10px;border-radius: 5px;margin-top: -5px}
-#container{display:flex;height:calc(100vh - 70px)}
-#pdfPanel{width:68.5%;border-right:3px solid #333;background: rgba(255,255,255,0.05);border-radius: 0 10px 10px 0;position: relative;}
-#pdfViewer{width:100%;height:100%;border: none;border-radius: 0 10px 10px 0}
-#timerFixed{position: absolute;top: 10px;right: 10px;background: rgba(0,0,0,0.8);color: #0f0;padding: 10px;border-radius: 5px;font-size: 18px;font-weight: bold;z-index: 10;opacity: 0.9;}
-#rightPanel{width:31.5%;display:flex;flex-direction:column;background: rgba(0,0,0,0.7);border-radius: 10px 0 0 10px}
-#qList{height:50%;overflow:auto;border-bottom:3px solid #333;padding:15px;background: rgba(255,255,255,0.05);border-radius: 10px 0 0 0}
-#answerPanel{height:50%;padding:15px;background: rgba(255,255,255,0.05);border-radius: 0 0 0 10px}
-button{padding:10px;margin:5px;cursor:pointer;border: none;border-radius: 5px;font-weight: 500;transition: all 0.3s}
-.qbtn{display:inline-block;width:45px;margin:3px;background: #333;border: 1px solid #555;color:white;padding:8px;border-radius: 5px;font-size: 16px}
-.qbtn:hover{background: #555;transform: scale(1.05)}
-.qbtn.active{background: #0a84ff;color: white;border-color: #0a84ff;transform: scale(1.1)}
-.qbtn.visited-attempted{background: #4CAF50 !important; border-color: #4CAF50;}
-.qbtn.visited-not-attempted{background: #FF9800 !important; border-color: #FF9800;}
-.optionBox{margin:8px 0;padding: 10px;background: rgba(255,255,255,0.1);border-radius: 5px;border: 1px solid #555}
-.optionBox input{margin-right: 10px}
-input[type=number]{width:100%;padding:10px;font-size:16px;border: 1px solid #555;border-radius: 5px;background: rgba(255,255,255,0.9);color: #333;margin-top: 5px}
-#submitBtn{background: linear-gradient(45deg, #0f0, #00ff00);color:black;font-size:18px;width:100%;padding:12px;border-radius: 5px;font-weight: bold}
-#submitBtn:hover{background: linear-gradient(45deg, #00ff00, #0f0);transform: translateY(-2px);box-shadow: 0 4px 8px rgba(0,0,0,0.3)}
-#uploadBox{padding:20px;background: rgba(0,0,0,0.8);text-align:center;border-bottom: 3px solid #333;box-shadow: 0 4px 8px rgba(0,0,0,0.3)}
-#uploadBox input[type="file"], #uploadBox input[type="number"]{padding:10px;margin:5px;border: 1px solid #555;border-radius: 5px;background: rgba(255,255,255,0.9);color: #333;font-size: 16px}
-#uploadBox button{background: #4CAF50;color: white;padding: 10px 20px;border-radius: 5px;font-size: 16px}
-#uploadBox button:hover{background: #45a049;transform: translateY(-2px)}
-h3{margin-top: 0;color: #0f0;font-size: 20px}
-label{font-weight: 500;color: #fff}
+*{
+  box-sizing:border-box;
+  font-family:'Inter', sans-serif;
+}
+
+body{
+  margin:0;
+  background: linear-gradient(135deg,#1e1f29,#2b2e3b);
+  color:white;
+  height:100vh;
+  overflow:hidden;
+}
+
+/* ================= HEADER ================= */
+header{
+  padding:20px;
+  font-size:24px;
+  font-weight:600;
+  text-align:center;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+}
+
+/* ================= UPLOAD PANEL ================= */
+#uploadBox{
+  padding:40px;
+  text-align:center;
+  background:rgba(255,255,255,0.04);
+  backdrop-filter:blur(15px);
+}
+
+input[type="file"]{
+  margin:15px;
+}
+
+input[type="number"]{
+  width:3cm;
+  height:1cm;
+  padding:5px;
+  margin:10px 5px;
+  border-radius:10px;
+  border:1px solid rgba(255,255,255,0.2);
+  background:rgba(255,255,255,0.08);
+  color:white;
+  text-align:center;
+  font-size:16px;
+  outline:none;
+}
+
+button{
+  padding:12px 30px;
+  border-radius:30px;
+  border:none;
+  cursor:pointer;
+  font-weight:600;
+  background:linear-gradient(45deg,#4da3ff,#0066ff);
+  color:white;
+}
+
+/* ================= CONTAINER ================= */
+#container{
+  display:flex;
+  height:100vh;
+}
+
+#pdfPanel{
+  width:75%;
+  position:relative;
+  border-right:1px solid rgba(255,255,255,0.1);
+}
+
+#pdfViewer{
+  width:100%;
+  height:100%;
+  border:none;
+}
+
+#timerFixed{
+  position:absolute;
+  top:20px;
+  right:20px;
+  background:rgba(0,0,0,0.6);
+  padding:12px 25px;
+  border-radius:40px;
+  font-weight:600;
+  backdrop-filter:blur(10px);
+}
+
+#rightPanel{
+  width:25%;
+  display:flex;
+  flex-direction:column;
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(20px);
+}
+
+/* ================= QUESTION LIST ================= */
+#qList{
+  height:45%;
+  overflow:auto;
+  padding:15px;
+  border-bottom:1px solid rgba(255,255,255,0.1);
+
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap:8px;
+}
+
+/* ================= QUESTION BUTTONS ================= */
+/* Centered numbers using flexbox */
+.qbtn{
+  width:0.75cm;
+  height:0.75cm;
+  border-radius:8px;
+  border:none;
+  background:rgba(255,255,255,0.08);
+  color:white;
+  font-size:11px;
+  cursor:pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.qbtn.active{ background:#0066ff; }
+.qbtn.visited-attempted{ background:#2ecc71; }
+.qbtn.visited-not-attempted{ background:#f39c12; }
+.qbtn.marked-review{ background:#3498db; }
+
+/* ================= ANSWER PANEL ================= */
+#answerPanel{
+  padding:20px;
+  height:55%;
+}
+
+.optionBox{
+  display:inline-block;
+  margin:8px;
+}
+
+.optionBox label{
+  display:block;
+  width:35px;
+  height:35px;
+  border-radius:8px;
+  background:rgba(255,255,255,0.1);
+  text-align:center;
+  line-height:35px;
+  cursor:pointer;
+}
+
+.optionBox label.selected{
+  background:#4da3ff;
+  color:black;
+}
+
+.actionRow{
+  display:flex;
+  justify-content:space-between;
+  margin-top:20px;
+}
+
+.smallBtn{
+  width:48%;
+}
 </style>
 </head>
+
 <body>
-<header>
-CBT Exam Website
-<span id="timer">03:00:00</span>
-</header>
+
+<header id="mainHeader">CBT Examination Portal</header>
 
 <div id="uploadBox">
-Upload PDF: <input type="file" id="pdfUpload" accept="application/pdf">
-Number of Questions: <input type="number" id="numQ" value="51" min="1">
-<button onclick="initQuestions()">Load Paper</button>
+  <h2>Load Examination</h2>
+
+  Upload PDF<br>
+  <input type="file" id="pdfUpload" accept="application/pdf"><br>
+
+  Number of Questions<br>
+  <input type="number" id="numQ" min="1"><br>
+
+  Time Allocation<br>
+  <input type="number" id="hours" placeholder="Hr" min="0" max="24">
+  <input type="number" id="minutes" placeholder="Min" min="0" max="59"><br><br>
+
+  <button onclick="initQuestions()">START EXAM</button>
 </div>
 
-<div id="container">
-<div id="pdfPanel">
-<iframe id="pdfViewer" width="100%" height="100%"></iframe>
-<div id="timerFixed">03:00:00</div>
-</div>
+<div id="container" style="display:none;">
+  <div id="pdfPanel">
+    <iframe id="pdfViewer"></iframe>
+    <div id="timerFixed">00:00:00</div>
+  </div>
 
-<div id="rightPanel">
-<div id="qList"></div>
-<div id="answerPanel">
-<h3>Question <span id="currentQ">1</span></h3>
-<div id="options"></div>
-<div>
-<label>Integer Answer:</label>
-<input type="number" id="intAns">
-</div>
-<button id="submitBtn" onclick="submitAnswers()">SUBMIT</button>
-</div>
-</div>
+  <div id="rightPanel">
+    <div id="qList"></div>
+
+    <div id="answerPanel">
+      <h3>Question <span id="currentQ">1</span></h3>
+
+      <div id="options"></div>
+
+      <label>Integer Answer</label>
+      <input type="number" id="intAns">
+
+      <div class="actionRow">
+        <button class="smallBtn" onclick="nextQuestion()">➜ Next</button>
+        <button class="smallBtn" onclick="markForReview()">🔖 Review</button>
+      </div>
+
+      <br>
+      <button style="width:100%;" onclick="submitAnswers()">📎 Submit</button>
+    </div>
+  </div>
 </div>
 
 <script>
-document.addEventListener('contextmenu', e => e.preventDefault());
-document.addEventListener('keydown', e => {
-  if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C'))) {
-    e.preventDefault();
+let totalQ=0, answers={}, current=1;
+let timerSec=0, timerInterval=null;
+let visited={}, markedForReview={};
+
+pdfUpload.onchange=e=>{
+  let file=e.target.files[0];
+  if(file){
+    pdfViewer.src=URL.createObjectURL(file);
   }
-});
-
-// Additional attempt to disable right-click on the PDF viewer (iframe/embed) and its content
-const pdfViewer = document.getElementById('pdfViewer');
-pdfViewer.addEventListener('contextmenu', e => e.preventDefault());
-pdfViewer.addEventListener('load', () => {
-  try {
-    // Attempt to disable context menu inside the iframe content (for local PDFs)
-    const iframeDoc = pdfViewer.contentDocument || pdfViewer.contentWindow.document;
-    if (iframeDoc) {
-      iframeDoc.addEventListener('contextmenu', e => e.preventDefault());
-    }
-  } catch (e) {
-    // Cross-origin restrictions may prevent this; ignore silently
-  }
-});
-
-let totalQ=0;let answers={};let current=1;let timerSec=3*60*60;let timerInterval=null;let visited={};
-
-function updateQuestionStatus(qNum) {
-  const btn = document.querySelectorAll('.qbtn')[qNum - 1];
-  if (visited[qNum]) {
-    if (answers[qNum]) {
-      btn.classList.add('visited-attempted');
-      btn.classList.remove('visited-not-attempted');
-    } else {
-      btn.classList.add('visited-not-attempted');
-      btn.classList.remove('visited-attempted');
-    }
-  } else {
-    btn.classList.remove('visited-attempted', 'visited-not-attempted');
-  }
-}
-
-// PDF upload
-pdfUpload.onchange=e=>{let file=e.target.files[0];let url=URL.createObjectURL(file);pdfViewer.src=url;}
+};
 
 function initQuestions(){
- totalQ=parseInt(numQ.value);
- let qList=document.getElementById('qList');
- qList.innerHTML="";
- for(let i=1;i<=totalQ;i++){
-  let b=document.createElement('button');
-  b.className='qbtn';
-  b.innerText=i;
-  b.onclick=()=>loadQuestion(i);
-  qList.appendChild(b);
- }
- loadQuestion(1);
- // Hide header and upload box, expand container
- document.querySelector('header').style.display = 'none';
- document.getElementById('uploadBox').style.display = 'none';
- document.getElementById('container').style.height = '100vh';
- // Start timer after loading
- startTimer();
+  totalQ=parseInt(numQ.value);
+  let h=parseInt(hours.value)||0;
+  let m=parseInt(minutes.value)||0;
+  timerSec=(h*3600)+(m*60);
+
+  if(!totalQ || timerSec<=0){
+    alert("Enter valid questions and time.");
+    return;
+  }
+
+  document.getElementById("uploadBox").style.display="none";
+  document.getElementById("mainHeader").style.display="none";
+  document.getElementById("container").style.display="flex";
+
+  generateQuestions();
+  loadQuestion(1);
+  startTimer();
+}
+
+function generateQuestions(){
+  let qList=document.getElementById("qList");
+  qList.innerHTML="";
+  for(let i=1;i<=totalQ;i++){
+    let b=document.createElement("button");
+    b.className="qbtn";
+    b.innerText=i;
+    b.onclick=()=>loadQuestion(i);
+    qList.appendChild(b);
+  }
 }
 
 function loadQuestion(n){
- current=n;
- visited[n] = true; // Mark as visited
- updateQuestionStatus(n);
- document.getElementById('currentQ').innerText=n;
- document.querySelectorAll('.qbtn').forEach(b=>b.classList.remove('active'));
- document.querySelectorAll('.qbtn')[n-1].classList.add('active');
+  current=n;
+  visited[n]=true;
+  updateStatus(n);
+  document.getElementById("currentQ").innerText=n;
 
- let optDiv=document.getElementById('options');
- optDiv.innerHTML="";
- ['A','B','C','D'].forEach(o=>{
-  let d=document.createElement('div');
-  d.className='optionBox';
-  d.innerHTML=`<input type="checkbox" id="${o}"> Option ${o}`;
-  optDiv.appendChild(d);
- });
- document.getElementById('intAns').value="";
- if(answers[n]){
-  let a=answers[n];
-  if(a.type=='mcq'){
-   a.val.forEach(v=>document.getElementById(v).checked=true);
-  } else if(a.type=='int'){
-   document.getElementById('intAns').value=a.val;
-  }
- }
+  document.querySelectorAll(".qbtn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll(".qbtn")[n-1].classList.add("active");
+
+  let optDiv=document.getElementById("options");
+  optDiv.innerHTML="";
+  ['A','B','C','D'].forEach(o=>{
+    let d=document.createElement("div");
+    d.className="optionBox";
+    let label=document.createElement("label");
+    label.innerText=o;
+    label.onclick=()=>toggleOption(o,label);
+    d.appendChild(label);
+    optDiv.appendChild(d);
+  });
+
+  intAns.value="";
 }
 
-// save answers on change - prevent both options and integer
-document.getElementById('options').addEventListener('change',()=>{
- let sel=[];
- ['A','B','C','D'].forEach(o=>{if(document.getElementById(o).checked) sel.push(o);});
- if(sel.length>0) {
-  answers[current]={type:'mcq',val:sel};
-  document.getElementById('intAns').value = ""; // Clear integer if options selected
- } else {
-  delete answers[current]; // If no options, remove answer
- }
- updateQuestionStatus(current);
+function toggleOption(o,label){
+  label.classList.toggle("selected");
+  let selected=[...document.querySelectorAll(".optionBox label.selected")].map(l=>l.innerText);
+  if(selected.length>0){
+    answers[current]={type:"mcq",val:selected};
+    intAns.value="";
+  } else delete answers[current];
+  updateStatus(current);
+}
+
+intAns.addEventListener("input",()=>{
+  let v=intAns.value.trim();
+  if(v!==""){
+    answers[current]={type:"int",val:v};
+    document.querySelectorAll(".optionBox label").forEach(l=>l.classList.remove("selected"));
+  } else delete answers[current];
+  updateStatus(current);
 });
 
-document.getElementById('intAns').addEventListener('input',()=>{
- let v=document.getElementById('intAns').value.trim();
- if(v!=="") {
-  answers[current]={type:'int',val:v};
-  // Uncheck all options if integer entered
-  ['A','B','C','D'].forEach(o=>document.getElementById(o).checked=false);
- } else {
-  delete answers[current]; // If empty, remove answer
- }
- updateQuestionStatus(current);
-});
+function updateStatus(n){
+  let btn=document.querySelectorAll(".qbtn")[n-1];
+  btn.classList.remove("visited-attempted","visited-not-attempted","marked-review");
+
+  if(markedForReview[n]) btn.classList.add("marked-review");
+  else if(visited[n] && answers[n]) btn.classList.add("visited-attempted");
+  else if(visited[n]) btn.classList.add("visited-not-attempted");
+}
+
+function nextQuestion(){
+  if(current<totalQ) loadQuestion(current+1);
+}
+
+function markForReview(){
+  markedForReview[current]=true;
+  updateStatus(current);
+}
+
+function startTimer(){
+  document.getElementById("timerFixed").innerText=formatTime(timerSec);
+  timerInterval=setInterval(()=>{
+    if(timerSec<=0){
+      clearInterval(timerInterval);
+      submitAnswers();
+      return;
+    }
+    timerSec--;
+    document.getElementById("timerFixed").innerText=formatTime(timerSec);
+  },1000);
+}
+
+function formatTime(sec){
+  let h=Math.floor(sec/3600);
+  let m=Math.floor((sec%3600)/60);
+  let s=sec%60;
+  return String(h).padStart(2,'0')+":"+String(m).padStart(2,'0')+":"+String(s).padStart(2,'0');
+}
 
 function submitAnswers(){
- if(timerInterval) clearInterval(timerInterval);
- let win=window.open('');
- win.document.write('<h2>Your Responses</h2>');
- for(let i=1;i<=totalQ;i++){
-  let a=answers[i];
-  let txt='Not Answered';
-  if(a){txt=a.type=='mcq'?a.val.join(', '):a.val;}
-  win.document.write(`<p>Q${i}: ${txt}</p>`);
- }
-}
+  clearInterval(timerInterval);
 
-// TIMER
-function startTimer(){
- timerInterval=setInterval(()=>{
-  if(timerSec<=0){clearInterval(timerInterval);alert('Time Over');submitAnswers();return;}
-  timerSec--;
-  let h=Math.floor(timerSec/3600);
-  let m=Math.floor((timerSec%3600)/60);
-  let s=timerSec%60;
-  document.getElementById('timerFixed').innerText=`${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
- },1000);
+  let win=window.open("");
+  win.document.write("<h2>Exam Submission Summary</h2>");
+  win.document.write("<table border='1' cellpadding='8'>");
+  win.document.write("<tr><th>Question</th><th>Answer</th></tr>");
+
+  for(let i=1;i<=totalQ;i++){
+    let ans="Not Answered";
+    if(answers[i]){
+      if(answers[i].type==="mcq") ans=answers[i].val.join(", ");
+      else ans=answers[i].val;
+    }
+    win.document.write("<tr><td>"+i+"</td><td>"+ans+"</td></tr>");
+  }
+
+  win.document.write("</table>");
+  win.document.close();
 }
-    
 </script>
-<script src="script.js?v=2"></script>
 
 </body>
-
 </html>
-
-
-
-
