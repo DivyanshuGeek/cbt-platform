@@ -68,6 +68,13 @@ Number of Questions: <input type="number" id="numQ" value="51" min="1">
 </div>
 
 <script>
+document.addEventListener('contextmenu', e => e.preventDefault());
+document.addEventListener('keydown', e => {
+  if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C'))) {
+    e.preventDefault();
+  }
+});
+
 let totalQ=0;let answers={};let current=1;let timerSec=3*60*60;let timerInterval=null;let visited={};
 
 function updateQuestionStatus(qNum) {
@@ -190,4 +197,5 @@ function startTimer(){
 </body>
 
 </html>
+
 
